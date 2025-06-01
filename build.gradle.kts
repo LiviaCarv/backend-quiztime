@@ -31,4 +31,6 @@ dependencies {
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
     implementation(libs.mongodb.driver.kotlin)
+
+    implementation(libs.ktor.server.call.logging)
 }
