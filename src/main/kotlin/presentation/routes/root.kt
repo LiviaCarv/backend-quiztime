@@ -9,10 +9,4 @@ fun Route.root() {
             "Welcome to the Quiz API!"
         )
     }
-
-    get(path = "/livia"){
-        call.respondText(
-            "hihi"
-        )
-    }
 }
