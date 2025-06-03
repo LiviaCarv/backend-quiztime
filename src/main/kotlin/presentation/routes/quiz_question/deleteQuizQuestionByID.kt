@@ -1,11 +1,11 @@
 package com.example.presentation.routes.quiz_question
 
-import com.example.presentation.config.quizQuestions
+import com.example.domain.QuizQuestionRepository
 import io.ktor.http.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Route.deleteQuizQuestionById() {
+fun Route.deleteQuizQuestionById(repository: QuizQuestionRepository) {
     delete(path = "/quiz/questions/{questionId}") {
         val id = call.parameters["questionId"]
 
@@ -15,7 +15,8 @@ fun Route.deleteQuizQuestionById() {
             return@delete
         }
 
-        val isDeleted = quizQuestions.removeIf { it.id == id }
+        val isDeleted = repository.deleteQuizQuestionById(id)
+
         if (isDeleted) {
             call.respond(status = HttpStatusCode.OK, message = "Question removed successfully..")
         } else {
