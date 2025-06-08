@@ -1,8 +1,8 @@
 package com.example.presentation.config
 
-import com.example.data.QuizQuestionRepositoryImpl
-import com.example.domain.QuizQuestionRepository
-import com.example.domain.model.QuizQuestion
+import com.example.data.database.DatabaseFactory
+import com.example.data.repository.QuizQuestionRepositoryImpl
+import com.example.domain.repository.QuizQuestionRepository
 import com.example.presentation.routes.quiz_question.deleteQuizQuestionById
 import com.example.presentation.routes.quiz_question.getAllQuizQuestions
 import com.example.presentation.routes.quiz_question.getQuizQuestionById
@@ -13,7 +13,8 @@ import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
 
-    val repository: QuizQuestionRepository = QuizQuestionRepositoryImpl()
+    val mongoDatabase = DatabaseFactory.create()
+    val repository: QuizQuestionRepository = QuizQuestionRepositoryImpl(mongoDatabase)
 
     routing {
         root()
