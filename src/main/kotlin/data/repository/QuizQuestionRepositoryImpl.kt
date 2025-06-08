@@ -1,15 +1,17 @@
 package com.example.data.repository
 
+import com.example.data.database.entity.QuizQuestionEntity
+import com.example.data.mapper.toQuizQuestionEntity
 import com.example.data.util.Constant.QUIZ_QUESTIONS_COLLECTION_NAME
-import com.example.domain.repository.QuizQuestionRepository
 import com.example.domain.model.QuizQuestion
+import com.example.domain.repository.QuizQuestionRepository
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 
 class QuizQuestionRepositoryImpl(
     mongoDatabase: MongoDatabase
 ) : QuizQuestionRepository {
 
-    private val questionCollection = mongoDatabase.getCollection<QuizQuestion>(QUIZ_QUESTIONS_COLLECTION_NAME)
+    private val questionCollection = mongoDatabase.getCollection<QuizQuestionEntity>(QUIZ_QUESTIONS_COLLECTION_NAME)
 
     private val quizQuestions = mutableListOf<QuizQuestion>()
 
@@ -24,7 +26,7 @@ class QuizQuestionRepositoryImpl(
     }
 
     override suspend fun upsertQuizQuestion(question: QuizQuestion) {
-        questionCollection.insertOne(question)
+        questionCollection.insertOne(question.toQuizQuestionEntity())
     }
 
     override suspend fun getQuizQuestionById(id: String): QuizQuestion? {
